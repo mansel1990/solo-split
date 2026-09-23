@@ -7,7 +7,8 @@
   },
   "scripts": {
     "test": "vitest run",
-    "migrate": "node --env-file=.env --experimental-strip-types db/migrate.ts"
+    "migrate": "node --env-file=.env --experimental-strip-types db/migrate.ts",
+    "dev-token": "node --env-file=.env --experimental-strip-types db/dev-token.ts"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",
