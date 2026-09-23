@@ -113,16 +113,19 @@ curl.exe -s -X POST http://localhost:3000/api/sync `
 }
 ```
 
-The response `pull` contains that group and expense (₹21,000, whole rupees), and `cursor` is the new high-water mark. Pull the same rows again with an empty push:
+The response `pull` contains that group and expense (₹21,000, whole rupees), and `cursor` is the new high-water mark. `since: 0` also returns the Dev member that `dev-token` created.
+
+Pull the same rows again with an empty push. PowerShell rewrites a JSON argument passed to `curl.exe`, so put the body in a file:
 
 ```powershell
+Set-Content -Path sync-pull.json -Value '{"since":0,"push":{}}' -Encoding ascii
 curl.exe -s -X POST http://localhost:3000/api/sync `
   -H "Authorization: Bearer $jwt" `
   -H "Content-Type: application/json" `
-  -d "{\"since\":0,\"push\":{}}"
+  --data-binary "@sync-pull.json"
 ```
 
-Use the returned `cursor` as `since` on the next call. `pull` should then be empty and `cursor` should stay the same.
+To confirm you are caught up, set `since` in that file to the `cursor` from the push response. `pull` should then be empty and `cursor` should stay the same.
 
 A share token can be pushed in `share_links` (`token` is 16–128 url-safe characters, and `group_id` or `member_id` is required). `GET /s/<token>` returns the placeholder page. A missing or revoked token returns “Link no longer active”.
 
