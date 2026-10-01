@@ -1,7 +1,7 @@
-import { theme, brand } from '../shared/theme';
-import { withTransaction } from './_lib/db';
-import { HttpError } from './_lib/errors';
-import { api } from './_lib/http';
+import { theme, brand } from '../shared/theme.js';
+import { withTransaction } from './_lib/db.js';
+import { HttpError } from './_lib/errors.js';
+import { api } from './_lib/http.js';
 
 const mark = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="72" height="72" aria-hidden="true"><rect width="200" height="200" rx="46" fill="${theme.light.primary}"/><g transform="translate(-2,-9)"><circle cx="68" cy="80" r="13" fill="${theme.light.accent}"/><path d="M120 82 Q134 68 148 82" stroke="${theme.light.accent}" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M56 122 L86 150 L140 108" stroke="${theme.light.accent}" stroke-width="18" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`;
 

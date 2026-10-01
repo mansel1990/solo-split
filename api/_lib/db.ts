@@ -1,10 +1,18 @@
 import type { PoolClient } from '@neondatabase/serverless';
-import { createPool } from '../../db/client';
+import { createPool } from '../../db/client.js';
+import { HttpError } from './errors.js';
 
 let pool: ReturnType<typeof createPool> | undefined;
 
 function getPool(): ReturnType<typeof createPool> {
-  if (!pool) pool = createPool();
+  try {
+    if (!pool) pool = createPool();
+  } catch (error) {
+    if (error instanceof Error && error.message === 'DATABASE_URL is required') {
+      throw new HttpError(500, error.message);
+    }
+    throw error;
+  }
   return pool;
 }
 

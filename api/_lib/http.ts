@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { HttpError } from './errors';
-import { verifyUserJwt, type AuthUser } from './jwt';
+import { HttpError } from './errors.js';
+import { verifyUserJwt, type AuthUser } from './jwt.js';
 
 export type { AuthUser };
 
@@ -10,7 +10,8 @@ export async function requireUser(req: IncomingMessage): Promise<AuthUser> {
   if (!value?.startsWith('Bearer ')) throw new HttpError(401, 'missing bearer token');
   try {
     return await verifyUserJwt(value.slice('Bearer '.length).trim());
-  } catch {
+  } catch (error) {
+    if (isMissingEnv(error) || error instanceof HttpError) throw error;
     throw new HttpError(401, 'invalid or expired token');
   }
 }
@@ -30,6 +31,10 @@ export async function readJson(req: IncomingMessage): Promise<unknown> {
   const text = Buffer.concat(chunks).toString('utf8').trim();
   if (!text) return {};
   return JSON.parse(text) as unknown;
+}
+
+function isMissingEnv(error: unknown): error is Error {
+  return error instanceof Error && /^[A-Z0-9_]+ is required$/.test(error.message);
 }
 
 export function sendJson(res: ServerResponse, status: number, body: unknown): void {
@@ -62,6 +67,10 @@ export function api(
       }
       if (error instanceof SyntaxError) {
         sendJson(res, 400, { error: 'invalid_json', message: 'request body is not JSON' });
+        return;
+      }
+      if (isMissingEnv(error)) {
+        sendJson(res, 500, { error: 'internal', message: error.message });
         return;
       }
       console.error(error);

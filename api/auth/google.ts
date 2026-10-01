@@ -1,10 +1,10 @@
 import { randomUUID } from 'node:crypto';
 import { OAuth2Client } from 'google-auth-library';
-import { withTransaction } from '../_lib/db';
-import { HttpError } from '../_lib/errors';
-import { api, readJson, sendJson } from '../_lib/http';
-import { signUserJwt } from '../_lib/jwt';
-import { googleAuthSchema, zodHttpError } from '../_lib/schemas';
+import { withTransaction } from '../_lib/db.js';
+import { HttpError } from '../_lib/errors.js';
+import { api, readJson, sendJson } from '../_lib/http.js';
+import { signUserJwt } from '../_lib/jwt.js';
+import { googleAuthSchema, zodHttpError } from '../_lib/schemas.js';
 
 type UserRow = {
   id: string;

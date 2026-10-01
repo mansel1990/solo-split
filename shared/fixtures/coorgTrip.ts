@@ -1,4 +1,4 @@
-import { resolveSplit } from '../resolveSplit';
+import { resolveSplit } from '../resolveSplit.js';
 import type { BalanceExpense, Transfer } from '../types';
 
 export const coorgMembers = {

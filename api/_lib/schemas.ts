@@ -1,5 +1,5 @@
 import { z, ZodError } from 'zod';
-import { HttpError } from './errors';
+import { HttpError } from './errors.js';
 
 const timestamp = z.string().datetime({ offset: true });
 const day = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);

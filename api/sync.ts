@@ -1,7 +1,7 @@
 import type { PoolClient, QueryResult } from '@neondatabase/serverless';
-import { withTransaction } from './_lib/db';
-import { HttpError } from './_lib/errors';
-import { api, readJson, requireUser, sendJson } from './_lib/http';
+import { withTransaction } from './_lib/db.js';
+import { HttpError } from './_lib/errors.js';
+import { api, readJson, requireUser, sendJson } from './_lib/http.js';
 import {
   syncSchema,
   zodHttpError,
@@ -12,7 +12,7 @@ import {
   type SettlementInput,
   type ShareLinkInput,
   type SyncBody,
-} from './_lib/schemas';
+} from './_lib/schemas.js';
 
 type Pull = {
   members: unknown[];
