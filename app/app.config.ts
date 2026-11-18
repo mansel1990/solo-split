@@ -22,6 +22,7 @@ const config: ExpoConfig = {
   platforms: ['android'],
   android: {
     package: 'com.sanjay.allsquare',
+    softwareKeyboardLayoutMode: 'resize',
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#0B1F3A',

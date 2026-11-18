@@ -1,13 +1,13 @@
 import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { createGroup, ensureSelf } from '../../../src/db/data';
 import { loadProfile } from '../../../src/db/profile';
 import { notifyDataChanged } from '../../../src/refresh';
 import { scheduleSync } from '../../../src/sync';
 import { useSession } from '../../../src/session';
 import { fonts, usePalette } from '../../../src/theme';
-import { Field, PrimaryButton } from '../../../src/ui';
+import { Field, FormScroll, PrimaryButton } from '../../../src/ui';
 
 export default function CreateGroupScreen() {
   const colors = usePalette();
@@ -36,7 +36,7 @@ export default function CreateGroupScreen() {
   }
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: colors.background }} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+    <FormScroll contentContainerStyle={styles.content}>
       <Stack.Screen options={{ title: 'New group' }} />
       <Field label="Name" value={name} onChangeText={setName} placeholder="Coorg trip" />
       <Text style={[styles.label, { color: colors.textMuted, fontFamily: fonts.label }]}>Default split</Text>
@@ -49,7 +49,7 @@ export default function CreateGroupScreen() {
       </Text>
       {error ? <Text style={[styles.error, { color: colors.negative, fontFamily: fonts.body }]}>{error}</Text> : null}
       <PrimaryButton label="Create group" onPress={() => { void onSave(); }} busy={busy} />
-    </ScrollView>
+    </FormScroll>
   );
 }
 

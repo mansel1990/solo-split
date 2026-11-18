@@ -1,6 +1,6 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import {
   getExpense,
   getGroup,
@@ -25,7 +25,7 @@ import { notifyDataChanged, queueUndo } from '../../../src/refresh';
 import { scheduleSync } from '../../../src/sync';
 import { useSession } from '../../../src/session';
 import { fonts, usePalette } from '../../../src/theme';
-import { Field, PrimaryButton } from '../../../src/ui';
+import { Field, FormScroll, PrimaryButton } from '../../../src/ui';
 
 const CATEGORIES = ['Food', 'Stay', 'Travel', 'Drinks', 'Other'];
 
@@ -185,11 +185,7 @@ export default function ExpenseEditScreen() {
   }
 
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: colors.background }}
-      contentContainerStyle={styles.content}
-      keyboardShouldPersistTaps="handled"
-    >
+    <FormScroll contentContainerStyle={styles.content}>
       <Stack.Screen options={{ title: params.expenseId ? 'Edit expense' : 'Add expense' }} />
       {form ? (
         <>
@@ -295,7 +291,7 @@ export default function ExpenseEditScreen() {
       ) : (
         <Text style={{ color: colors.textMuted, fontFamily: fonts.body }}>{error ?? 'Loading…'}</Text>
       )}
-    </ScrollView>
+    </FormScroll>
   );
 }
 

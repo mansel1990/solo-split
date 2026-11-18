@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View,
 } from 'react-native';
 import { getMe, patchMe } from '../../src/api';
 import { renameSelf } from '../../src/db/data';
@@ -13,6 +12,7 @@ import { loadProfile, saveProfile, type Profile } from '../../src/db/profile';
 import { scheduleSync } from '../../src/sync';
 import { useSession } from '../../src/session';
 import { fonts, usePalette } from '../../src/theme';
+import { FormScroll } from '../../src/ui';
 
 export default function SettingsScreen() {
   const colors = usePalette();
@@ -83,7 +83,7 @@ export default function SettingsScreen() {
   }
 
   return (
-    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+    <FormScroll contentContainerStyle={styles.screen}>
       <Text style={[styles.label, { color: colors.textMuted, fontFamily: fonts.label }]}>Name</Text>
       <TextInput
         value={name}
@@ -119,7 +119,7 @@ export default function SettingsScreen() {
       <Pressable accessibilityRole="button" onPress={() => { void signOut(); }} style={styles.signOut}>
         <Text style={[styles.signOutLabel, { color: colors.text, fontFamily: fonts.label }]}>Sign out</Text>
       </Pressable>
-    </View>
+    </FormScroll>
   );
 }
 
@@ -133,7 +133,7 @@ function inputStyle(colors: { text: string; surface: string; border: string }) {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, padding: 20 },
+  screen: { padding: 20, paddingBottom: 48 },
   label: { marginTop: 16, marginBottom: 8, fontSize: 13 },
   input: {
     borderWidth: 1,

@@ -1,6 +1,6 @@
 import { Stack, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import {
   listMembers,
   restoreMember,
@@ -13,7 +13,7 @@ import { queueUndo, subscribeData } from '../../src/refresh';
 import { scheduleSync } from '../../src/sync';
 import { useSession } from '../../src/session';
 import { fonts, usePalette } from '../../src/theme';
-import { Field, PrimaryButton, UndoHost } from '../../src/ui';
+import { Field, FormScroll, PrimaryButton, UndoHost } from '../../src/ui';
 
 export default function PeopleScreen() {
   const colors = usePalette();
@@ -106,7 +106,7 @@ export default function PeopleScreen() {
   const title = familyId ? 'Person in the family' : editing ? 'Edit person' : 'Add a person';
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: colors.background }} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+    <FormScroll contentContainerStyle={styles.content}>
       <Stack.Screen options={{ title: 'People' }} />
       <Text style={[styles.heading, { color: colors.text, fontFamily: fonts.heading }]}>{title}</Text>
       <Field label="Name" value={name} onChangeText={setName} placeholder="Ravi" />
@@ -163,7 +163,7 @@ export default function PeopleScreen() {
         })}
       </View>
       <UndoHost />
-    </ScrollView>
+    </FormScroll>
   );
 }
 

@@ -1,6 +1,6 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { listParties, saveSettlement, type Party } from '../../src/db/data';
 import { today } from '../../src/ids';
 import { formatINR, memberLabel, paiseToInput, parseINR } from '../../src/money';
@@ -8,7 +8,7 @@ import { notifyDataChanged } from '../../src/refresh';
 import { scheduleSync } from '../../src/sync';
 import { useSession } from '../../src/session';
 import { fonts, usePalette } from '../../src/theme';
-import { Field, PrimaryButton } from '../../src/ui';
+import { Field, FormScroll, PrimaryButton } from '../../src/ui';
 
 export default function SettleScreen() {
   const colors = usePalette();
@@ -91,7 +91,7 @@ export default function SettleScreen() {
   }
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: colors.background }} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+    <FormScroll contentContainerStyle={styles.content}>
       <Stack.Screen options={{ title: 'Record payment' }} />
       <Text style={[styles.line, { color: colors.text, fontFamily: fonts.heading }]}>
         {fromName && toName ? `${fromName} pays ${toName}` : 'Who paid whom'}
@@ -128,7 +128,7 @@ export default function SettleScreen() {
       ) : null}
       {error ? <Text style={[styles.error, { color: colors.negative, fontFamily: fonts.body }]}>{error}</Text> : null}
       <PrimaryButton label="Save payment" onPress={() => { void onSave(); }} busy={busy} />
-    </ScrollView>
+    </FormScroll>
   );
 }
 

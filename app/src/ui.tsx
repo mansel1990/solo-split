@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View, type StyleProp, type ViewStyle } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import { subscribeUndo, takeUndo } from './refresh';
 import { fonts, usePalette } from './theme';
@@ -63,6 +63,29 @@ export function Field({
         ]}
       />
     </View>
+  );
+}
+
+export function FormScroll({
+  children,
+  contentContainerStyle,
+  style,
+}: {
+  children: ReactNode;
+  contentContainerStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
+}) {
+  const colors = usePalette();
+  return (
+    <ScrollView
+      style={[{ flex: 1, backgroundColor: colors.background }, style]}
+      contentContainerStyle={[{ paddingBottom: 24 }, contentContainerStyle]}
+      keyboardShouldPersistTaps="handled"
+      automaticallyAdjustKeyboardInsets
+      keyboardDismissMode="on-drag"
+    >
+      {children}
+    </ScrollView>
   );
 }
 
