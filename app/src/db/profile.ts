@@ -36,7 +36,7 @@ export async function clearLocalData(db: SQLiteDatabase): Promise<void> {
       delete from members where family_id is not null;
       delete from members;
       delete from users;
-      update sync_state set cursor = 0 where id = 1;
+      update sync_state set cursor = 0, last_group_id = null where id = 1;
     `);
     await db.execAsync('COMMIT');
   } catch (error) {

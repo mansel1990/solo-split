@@ -33,6 +33,7 @@ const config: ExpoConfig = {
     'expo-secure-store',
     'expo-sqlite',
     'expo-font',
+    'expo-sharing',
     'expo-status-bar',
     [
       'expo-splash-screen',

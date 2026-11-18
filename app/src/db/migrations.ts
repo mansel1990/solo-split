@@ -124,7 +124,13 @@ create index expenses_group on expenses (group_id) where deleted_at is null;
 create index settlements_group on settlements (group_id) where deleted_at is null;
 `;
 
-const migrations: { id: string; sql: string }[] = [{ id: '001_init', sql: initSql }];
+const migrations: { id: string; sql: string }[] = [
+  { id: '001_init', sql: initSql },
+  {
+    id: '002_last_group',
+    sql: 'alter table sync_state add column last_group_id text;',
+  },
+];
 
 export async function migrate(db: SQLiteDatabase): Promise<void> {
   await db.execAsync(`

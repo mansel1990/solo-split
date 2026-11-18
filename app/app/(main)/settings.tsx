@@ -8,7 +8,9 @@ import {
   View,
 } from 'react-native';
 import { getMe, patchMe } from '../../src/api';
+import { renameSelf } from '../../src/db/data';
 import { loadProfile, saveProfile, type Profile } from '../../src/db/profile';
+import { scheduleSync } from '../../src/sync';
 import { useSession } from '../../src/session';
 import { fonts, usePalette } from '../../src/theme';
 
@@ -68,6 +70,8 @@ export default function SettingsScreen() {
         upi_vpa: upi.trim() === '' ? null : upi.trim(),
       });
       await saveProfile(db, updated);
+      await renameSelf(db, updated.name ?? trimmed);
+      scheduleSync();
       setName(updated.name ?? '');
       setUpi(updated.upi_vpa ?? '');
       setSaved(true);

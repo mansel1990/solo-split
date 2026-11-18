@@ -12,6 +12,7 @@ import { exchangeGoogleIdToken } from './api';
 import { googleWebClientId } from './config';
 import { migrate } from './db/migrations';
 import { clearLocalData, saveProfile } from './db/profile';
+import { unbindSync } from './sync';
 
 const JWT_KEY = 'allsquare.jwt';
 
@@ -101,6 +102,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(async () => {
     if (!db) return;
+    await unbindSync();
     await SecureStore.deleteItemAsync(JWT_KEY);
     try {
       await GoogleSignin.signOut();
